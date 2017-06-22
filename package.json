@@ -1,6 +1,6 @@
 {
-  "name": "skipregex",
-  "version": "0.1.0",
+  "name": "skip-regex",
+  "version": "0.2.0",
   "description": "Micro parser for detection of literal regexes",
   "main": "./dist/skip-regex.js",
   "module": "./lib/skip-regex.js",
