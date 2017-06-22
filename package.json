@@ -1,0 +1,36 @@
+{
+  "name": "skipregex",
+  "version": "0.1.0",
+  "description": "Micro parser for detection of literal regexes",
+  "main": "./dist/skip-regex.js",
+  "module": "./lib/skip-regex.js",
+  "jsnext:main": "./lib/skip-regex.js",
+  "types": "./index.d.ts",
+  "engines": {
+    "node": ">=4.2",
+    "npm": ">=3.0"
+  },
+  "scripts": {
+    "test": "node ./test/run.js",
+    "pretest": "rollup -c",
+    "build": "rm -rf ./dist/* && npm t",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "regexp",
+    "parser",
+    "javascript",
+    "es6"
+  ],
+  "homepage": "https://github.com/aMarCruz/skip-regex",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aMarCruz/skip-regex.git"
+  },
+  "author": "aMarCruz <amarcruz@yahoo.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^0.43.0",
+    "rollup-plugin-buble": "^0.15.0"
+  }
+}
