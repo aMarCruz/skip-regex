@@ -4,8 +4,6 @@
  * @author aMarCruz
  * @license MIT
  */
-'use strict';
-
 /** @exports skipRegex */
 var skipRegex = (function () {
 
@@ -122,4 +120,4 @@ var skipRegex = (function () {
 
 })();
 
-module.exports = skipRegex;
+export default skipRegex;

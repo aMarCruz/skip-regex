@@ -1,12 +1,10 @@
-/*
-  Regex detection.
-  From: https://github.com/riot/parser/blob/master/src/skip-regex.js
-*/
 
-const skipRegex = (function () {
+/** @exports skipRegex */
+export default (function () {
 
   // safe characters to precced a regex (including `=>`, `**`, and `...`)
   const beforeReChars = '[{(,;:?=|&!^~>%*/'
+  const beforeReSign = beforeReChars + '+-'
 
   // keyword that can preceed a regex (`in` is handled as special case)
   const beforeReWords = [
@@ -23,7 +21,8 @@ const skipRegex = (function () {
     'yield'
   ]
 
-  const wordsLastChar = beforeReWords.reduce((s, w) => s + w.slice(-1), '')
+  // Last chars of all the beforeReWords elements to speed up the process.
+  const wordsEndChar = beforeReWords.reduce((s, w) => s + w.slice(-1), '')
 
   // Matches literal regex from the start of the buffer.
   // The buffer to search must not include line-endings.
@@ -35,6 +34,7 @@ const skipRegex = (function () {
   /**
    * Searches the position of the previous non-blank character inside `code`,
    * starting with `pos - 1`.
+   *
    * @param   {string} code - Buffer to search
    * @param   {number} pos  - Starting position
    * @returns {number} Position of the first non-blank character to the left.
@@ -46,26 +46,32 @@ const skipRegex = (function () {
   }
 
   /**
-   * Check if the code in the `start` position can be a regex.
+   * Check if the character in the `start` position within `code` can be a regex
+   * and returns the position following this regex or `start+1` if this is not
+   * one.
    *
+   * NOTE: Ensure `start` points to a slash (this is not checked).
+   *
+   * @function skipRegex
    * @param   {string} code  - Buffer to test in
    * @param   {number} start - Position the first slash inside `code`
-   * @returns {number} position of the char following the regex.
+   * @returns {number} Position of the char following the regex.
+   *
    */
-  return function _skipRegex(code, start) {
+  return function skipRegex(code, start) {
 
-    // `exec()` will extract from the slash to the end of the line
-    // and the chained `match()` will match the possible regex.
     const re = /.*/g
     let pos = re.lastIndex = start++
 
-    const match = re.exec(code)[0].match(RE_LIT_REGEX)
+    // `exec()` will extract from the slash to the end of the line
+    //   and the chained `match()` will match the possible regex.
+    const match = (re.exec(code) || ' ')[0].match(RE_LIT_REGEX)
 
     if (match) {
       const next = pos + match[0].length      // result comes from `re.match`
 
       pos = _prev(code, pos)
-      const c = code[pos]
+      let c = code[pos]
 
       // start of buffer or safe prefix?
       if (pos < 0 || ~beforeReChars.indexOf(c)) {
@@ -79,21 +85,27 @@ const skipRegex = (function () {
           start = next
         }
 
-      } else if (c === '+' || c === '-') {
-        // tricky case
-        if (code[--pos] !== c ||              // if have a single operator or
-            (pos = _prev(code, pos)) < 0 ||   // ...have `++` and no previous token or
-            !RE_JS_VCHAR.test(code[pos])) {   // ...the token is not a JS var/number
-          start = next                        // ...this is a regex
+      } else {
+
+        if (c === '+' || c === '-') {
+          // tricky case
+          if (code[--pos] !== c ||            // if have a single operator or
+             (pos = _prev(code, pos)) < 0 ||  // ...have `++` and no previous token
+             ~beforeReSign.indexOf(c = code[pos])) {
+            return next                       // ...this is a regex
+          }
         }
 
-      } else if (~wordsLastChar.indexOf(c)) {
-        // keyword?
-        const end = pos + 1
+        if (~wordsEndChar.indexOf(c)) {  // looks like a keyword?
+          const end = pos + 1
 
-        while (--pos >= 0 && RE_JS_VCHAR.test(code[pos]));
-        if (~beforeReWords.indexOf(code.slice(pos + 1, end))) {
-          start = next
+          // get the complete (previous) keyword
+          while (--pos >= 0 && RE_JS_VCHAR.test(code[pos]));
+
+          // it is in the allowed keywords list?
+          if (~beforeReWords.indexOf(code.slice(pos + 1, end))) {
+            start = next
+          }
         }
       }
     }
@@ -102,5 +114,3 @@ const skipRegex = (function () {
   }
 
 })()
-
-export default skipRegex

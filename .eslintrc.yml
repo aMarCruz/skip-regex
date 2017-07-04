@@ -1,13 +1,6 @@
 ###########################################################################
-#                                                                         #
-#   Revised by aMarCruz - 2016-01-06                                      #
-#   Follow most of rules from http://standardjs.com/                      #
-#   2016-01-19: use 1tbs style for blocks, like in the riot core          #
-#   2016-03-05: revised for eslint v2.2, disallow conditional assign      #
-#   2016-03-10: allows conditional assigns, shadowing vars in the upper   #
-#               scope, and the creation of functions within loops.        #
-#   2016-03-11: Don't require empty line after variable declarations      #
-#                                                                         #
+#   ESLint v3.x configuration                                             #
+#   Revised by aMarCruz - 2016-06-22                                      #
 ###########################################################################
 
 root: true
@@ -98,12 +91,12 @@ rules:
   no-new-wrappers: 2                # disallow creating new instances of String, Number, and Boolean (0)
   no-octal-escape: 2                # disallow use of octal escape sequences in string literals, such as `"Copyright \251"` (0)
   no-proto: 2                       # disallow usage of __proto__ property (0)
-  no-return-assign: 1               # disallow use of assignment in return statement (0)
+  no-return-assign: 2               # disallow use of assignment in return statement ([0, except-parens])
   no-script-url: 2                  # disallow use of javascript urls (0)
   no-self-compare: 2                # disallow comparisons where both sides are exactly the same (0)
   no-sequences: 2                   # disallow use of comma operator (0)
   no-throw-literal: 2               # restrict what can be thrown as an exception
-  no-unused-expressions: 1          # disallow usage of expressions in statement position (0)
+  no-unused-expressions: 2          # disallow usage of expressions in statement position (0)
   no-useless-call: 1                # disallow unnecessary .call() and .apply()
   no-void: 2                        # disallow use of void operator (0)
   no-with: 2                        # disallow use of the with statement (0)
@@ -121,7 +114,6 @@ rules:
   no-label-var: 2                   # disallow labels that share a name with a variable (0)
   no-shadow-restricted-names: 2     # disallow shadowing of names such as arguments (0)
   no-undef-init: 2                  # disallow use of undefined when initializing variables (0)
-# no-unused-vars: 1                 # disallow declaration of variables that are not used in the code ([2, {"vars": "all", "args": "after-used"}])
   no-use-before-define:             # disallow use of variables before they are defined (0)
     - 2
     - "nofunc"

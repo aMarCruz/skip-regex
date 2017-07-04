@@ -1,11 +1,15 @@
 {
   "name": "skip-regex",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Micro parser for detection of literal regexes",
   "main": "./dist/skip-regex.js",
-  "module": "./lib/skip-regex.js",
-  "jsnext:main": "./lib/skip-regex.js",
+  "module": "./dist/skip-regex.esm.js",
+  "jsnext:main": "./dist/skip-regex.esm.js",
   "types": "./index.d.ts",
+  "files": [
+    "*.ts",
+    "dist/"
+  ],
   "engines": {
     "node": ">=4.2",
     "npm": ">=3.0"
