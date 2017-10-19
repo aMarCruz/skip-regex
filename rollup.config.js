@@ -2,19 +2,18 @@ import buble from 'rollup-plugin-buble'
 
 const banner = [
   '/**',
-  ' * skipRegex',
-  ' * @version ' + require('./package.json').version,
+  ' * skipRegex v' + require('./package.json').version,
   ' * @author aMarCruz',
   ' * @license MIT',
   ' */'
 ].join('\n')
 
 export default {
-  entry: 'src/skip-regex.js',
+  input: 'src/skip-regex.js',
   plugins: [buble()],
-  banner: banner,
-  targets: [
-    { format: 'cjs', dest: 'dist/skip-regex.js' },
-    { format: 'es', dest: 'dist/skip-regex.esm.js' }
+  banner,
+  output: [
+    { format: 'cjs', file: 'dist/skip-regex.js' },
+    { format: 'es', file: 'dist/skip-regex.esm.js' }
   ]
 }

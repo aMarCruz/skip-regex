@@ -1,6 +1,5 @@
 /**
- * skipRegex
- * @version 0.3.0
+ * skipRegex v0.3.1
  * @author aMarCruz
  * @license MIT
  */

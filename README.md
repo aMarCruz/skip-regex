@@ -24,9 +24,9 @@ skipRegex(source: string, start: number) => number
 
 The `start` position must point to the first slash inside `source`.
 
-From there, `skipRegex` will find with 99% accuracy the end of a regular literal expression in the given string.
+From there, `skipRegex` will find with 99% accuracy the end of a regular expression in the given string.
 
-The returned value is the position of the character following the regex, or `start+1` if this is not a regex.
+The returned value is the position of the character following the regex, or `start+1` if a regex was not found.
 
 ## Example
 
