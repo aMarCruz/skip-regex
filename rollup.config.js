@@ -1,19 +1,34 @@
 import buble from 'rollup-plugin-buble'
+import cleanup from 'rollup-plugin-cleanup'
 
-const banner = [
-  '/**',
-  ' * skipRegex v' + require('./package.json').version,
-  ' * @author aMarCruz',
-  ' * @license MIT',
-  ' */'
-].join('\n')
+const pkg = require('./package.json')
+const banner = `/**
+ * skip-regex v${pkg.version}
+ * @author aMarCruz
+ * @license MIT
+ */
+/*eslint-disable*/`
 
 export default {
-  input: 'src/skip-regex.js',
-  plugins: [buble()],
-  banner,
+  input: pkg.source,
+  plugins: [
+    buble({
+      target: { ie: 9 },
+    }),
+    cleanup({
+      comments: ['some', 'eslint'],
+    }),
+  ],
   output: [
-    { format: 'cjs', file: 'dist/skip-regex.js' },
-    { format: 'es', file: 'dist/skip-regex.esm.js' }
+    {
+      banner,
+      file: pkg.main,
+      format: 'cjs',
+    },
+    {
+      banner,
+      file: pkg.module,
+      format: 'es',
+    },
   ]
 }

@@ -1,7 +1,6 @@
-dist/*
-test/*
-!test/index.js
-coverage/*
-node_modules/*
-**/*.md
 **/*.json
+**/*.md
+**/*.min.js
+coverage/
+dist/
+node_modules/

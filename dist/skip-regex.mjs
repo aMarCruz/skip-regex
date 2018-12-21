@@ -4,8 +4,6 @@
  * @license MIT
  */
 /*eslint-disable*/
-'use strict';
-
 var skipRegex = (function () {
   var beforeReChars = '[{(,;:?=|&!^~<>%*/';
   var beforeReSign = beforeReChars + '+-';
@@ -72,5 +70,5 @@ var skipRegex = (function () {
   }
 })();
 
-module.exports = skipRegex;
-//# sourceMappingURL=skip-regex.js.map
+export default skipRegex;
+//# sourceMappingURL=skip-regex.mjs.map

@@ -1,17 +1,20 @@
-
-/** @exports skipRegex */
+/**
+ * @exports skipRegex
+ */
 export default (function () {
 
-  // safe characters to precced a regex (including `=>`, `**`, and `...`)
-  const beforeReChars = '[{(,;:?=|&!^~>%*/'
+  // Safe characters that may precede a regex (including `=>` and `**`)
+  const beforeReChars = '[{(,;:?=|&!^~<>%*/'
   const beforeReSign = beforeReChars + '+-'
 
-  // keyword that can preceed a regex (`in` is handled as special case)
+  // Keyword that can may precede a regex
   const beforeReWords = [
+    'await',
     'case',
     'default',
     'do',
     'else',
+    'extends',
     'in',
     'instanceof',
     'prefix',
@@ -26,49 +29,52 @@ export default (function () {
 
   // Matches literal regex from the start of the buffer.
   // The buffer to search must not include line-endings.
-  const RE_LIT_REGEX = /^\/(?=[^*>/])[^[/\\]*(?:(?:\\.|\[(?:\\.|[^\]\\]*)*\])[^[\\/]*)*?\/[gimuy]*/
+  const R_JS_REGEX = /^\/(?=[^*/])[^[/\\]*(?:(?:\\.|\[(?:\\.|[^\]\\]*)*\])[^[\\/]*)*?\/[gimuy]*/
 
   // Valid characters for JavaScript variable names and literal numbers.
-  const RE_JS_VCHAR = /[$\w]/
+  const R_JS_VCHAR = /[$\w]/
+
+  // Matches all up to the end of line.
+  const R_LINE_ALL = /.*/g
 
   /**
-   * Searches the position of the previous non-blank character inside `code`,
-   * starting with `pos - 1`.
+   * Searches the position of the previous non-blank character inside `code`
+   * starting at `pos - 1`.
    *
    * @param   {string} code - Buffer to search
    * @param   {number} pos  - Starting position
    * @returns {number} Position of the first non-blank character to the left.
    * @private
    */
-  function _prev(code, pos) {
-    while (--pos >= 0 && /\s/.test(code[pos]));
+  const _prev = function (code, pos) {
+    while (--pos >= 0 && /\s/.test(code[pos])) {}
     return pos
   }
 
   /**
-   * Check if the character in the `start` position within `code` can be a regex
-   * and returns the position following this regex or `start+1` if this is not
-   * one.
+   * Checks if the character at the `start` position within `code` can be
+   * a regular expression and returns the ending position of this regex, or
+   * `start+1` if it not.
    *
    * NOTE: Ensure `start` points to a slash (this is not checked).
    *
-   * @function skipRegex
-   * @param   {string} code  - Buffer to test in
-   * @param   {number} start - Position the first slash inside `code`
-   * @returns {number} Position of the char following the regex.
-   *
+   * @param {string} code Text buffer
+   * @param {number} start Position of the a slash within `code`
+   * @returns {number} Position of the chararacter following the regex.
    */
-  return function skipRegex(code, start) {
+  return function skipRegex (code, start) {
 
-    const re = /.*/g
+    // `re.exec()` will extract from the slash to the end of the line
+    const re = R_LINE_ALL
     let pos = re.lastIndex = start++
+    let match = re.exec(code)
 
-    // `exec()` will extract from the slash to the end of the line
-    //   and the chained `match()` will match the possible regex.
-    const match = (re.exec(code) || ' ')[0].match(RE_LIT_REGEX)
+    // and this `match()` will match the possible regex.
+    match = match && match[0].match(R_JS_REGEX)
 
     if (match) {
-      const next = pos + match[0].length      // result comes from `re.match`
+      // Stores the ending position of this prossible regex.
+      const next = pos + match[0].length
 
       pos = _prev(code, pos)
       let c = code[pos]
@@ -78,7 +84,9 @@ export default (function () {
         return next
       }
 
-      // from here, `pos` is >= 0 and `c` is code[pos]
+      // from here, `pos` is >= 0 and `c` is the non-blank character
+      // preceding the slash.
+
       if (c === '.') {
         // can be `...` or something silly like 5./2
         if (code[pos - 1] === '.') {
@@ -90,8 +98,13 @@ export default (function () {
         if (c === '+' || c === '-') {
           // tricky case
           if (code[--pos] !== c ||            // if have a single operator or
-             (pos = _prev(code, pos)) < 0 ||  // ...have `++` and no previous token
-             ~beforeReSign.indexOf(c = code[pos])) {
+             (pos = _prev(code, pos)) < 0) {  // ...have `++` and no previous token
+            return next                       // ...this is a regex
+          }
+
+          // we have '++' and `pos` points to the preceding non-blank
+          c = code[pos]
+          if (~beforeReSign.indexOf(c)) {
             return next                       // ...this is a regex
           }
         }
@@ -100,7 +113,7 @@ export default (function () {
           const end = pos + 1
 
           // get the complete (previous) keyword
-          while (--pos >= 0 && RE_JS_VCHAR.test(code[pos]));
+          while (--pos >= 0 && R_JS_VCHAR.test(code[pos])) {}
 
           // it is in the allowed keywords list?
           if (~beforeReWords.indexOf(code.slice(pos + 1, end))) {
