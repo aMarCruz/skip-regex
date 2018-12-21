@@ -8,6 +8,7 @@ Ready for production
 
 - Adds `away` and `extends` as keywords that can precede a regex.
 - UMD Builds, including a minified one for browsers.
+- ESLint with revised configuration.
 - Karma test for browsers (local) and node.
 - Travis test with 100% coverage.
 - Config file for the markdownlint VSCode extension.
