@@ -1,7 +1,7 @@
 # Send coverage report from node 6 builds of any branch
 
 CURBUILD = "$(TRAVIS_NODE_VERSION)"
-REQBUILD = "4.2"
+REQBUILD = "6.14"
 
 setup_cover:
 ifeq ($(CURBUILD),$(REQBUILD))
@@ -9,9 +9,7 @@ ifeq ($(CURBUILD),$(REQBUILD))
 endif
 
 node_test:
-ifneq ($(CURBUILD),$(REQBUILD))
 	@ yarn lint
-endif
 	@ yarn test
 
 send_cover:

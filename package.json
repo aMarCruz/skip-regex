@@ -43,7 +43,6 @@
   "author": "aMarCruz <amarcruz@yahoo.com>",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^5.10.0",
     "karma": "^3.1.4",
     "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "^1.1.0",
@@ -54,5 +53,8 @@
     "rollup-plugin-buble": "^0.19.0",
     "rollup-plugin-cleanup": "^3.0.0",
     "rollup-plugin-uglify": "^6.0.0"
+  },
+  "dependencies": {
+    "eslint": "^5.10.0"
   }
 }
