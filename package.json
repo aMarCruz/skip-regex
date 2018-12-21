@@ -21,6 +21,7 @@
     "k": "karma start ./test/karma.conf.js",
     "prek": "rollup -c rollup.browser.js",
     "build": "rollup -mc && rollup -c rollup.browser.js",
+    "lint": "eslint src/*.js test/*.js",
     "coverage": "nyc report -r=lcov",
     "prepublish": "rm ./dist/* && npm run build && npm test"
   },
