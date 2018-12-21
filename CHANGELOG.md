@@ -1,5 +1,11 @@
 # skipRegex Changes
 
+## \[1.0.1] - 2018-12-21
+
+### Fixed
+
+- ESLint must be in devDependendcies.
+
 ## \[1.0.0] - 2018-12-21
 
 Ready for production
