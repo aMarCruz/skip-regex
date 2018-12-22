@@ -17,11 +17,12 @@ export default (function () {
     'extends',
     'in',
     'instanceof',
+    'of',
     'prefix',
     'return',
     'typeof',
     'void',
-    'yield'
+    'yield',
   ]
 
   // Last chars of all the beforeReWords elements to speed up the process.

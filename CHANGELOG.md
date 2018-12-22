@@ -1,5 +1,11 @@
 # skipRegex Changes
 
+## \[Unreleased]
+
+### Added
+
+- Adds `of` to the keywords that can precede a regex.
+
 ## \[1.0.1] - 2018-12-21
 
 ### Fixed

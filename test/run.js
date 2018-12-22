@@ -112,6 +112,7 @@ describe('skipRegex', function () {
     ['else /a/.test(a)\na', 5, 8],
     ['class X extends /s/.constructor {}', 16, 19],
     ['for(r in /a/.source){}', 9, 12],
+    ['for(a of /\\d/g.exec("5")) {}', 9, 14],
     ['r instanceof /r/.contructor', 13, 16],
     ['a=void /r/', 7, 10],
     ['yield /./\n', 6, 9],
