@@ -5,6 +5,7 @@
 ### Added
 
 - Adds `of` to the keywords that can precede a regex.
+- Related links in the Readme.
 
 ## \[1.0.1] - 2018-12-21
 

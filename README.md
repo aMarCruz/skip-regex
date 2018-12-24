@@ -84,6 +84,16 @@ import skipRegex = require('skip-regex')
 //...
 ```
 
+## Related Links
+
+Some sites and tools that have been helpful:
+
+- [RegExp (Regular Expressions) Objects](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-regexp-regular-expression-objects) : ECMA Specs
+- [RegExp on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) : MDN Reference
+- [RegEgg](http://www.rexegg.com/) : Complete tutorial, various regex dialects
+- [RegExr](https://regexr.com/) : Online tool for learn and test regexes
+- [RegExp Preview and Editor](https://marketplace.visualstudio.com/items?itemName=le0zh.vscode-regexp-preivew) : VSCode extension based on regexper-static
+
 ## Support my Work
 
 I'm a full-stack developer with more than 20 year of experience and I try to share most of my work for free and help others, but this takes a significant amount of time and effort so, if you like my work, please consider...
