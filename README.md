@@ -8,7 +8,7 @@
 
 Micro parser for detection of literal regexes.
 
-- Fast detenction with high accuracy.
+- Fast detection with high accuracy.
 - Minimum size.
 - Compatible with NodeJS, bundlers, IE9+, and modern Browsers.
 - TypeScript definition.
@@ -22,7 +22,7 @@ npm install skip-regex --save
 yarn add skip-regex
 ```
 
-or load the minified UMD build in your browser:
+or load the global `skipRegex` function in your browser:
 
 ```html
 <script src="https://unpkg.com/skip-regex/index.min.js"></script>
@@ -32,7 +32,7 @@ Three formats transpiled to ES5:
 
 - CommonJS for node.js and browserify-like bundlers.
 - ESM for bundlers like [Rollup](https://github.com/rollup/rollup).
-- UMD for AMD, CommonJS, and browsers through the global `skipRegex` function.
+- UMD for AMD, CommonJS, and browsers.
 
 ## Syntax
 
@@ -42,15 +42,13 @@ skipRegex(source: string, start: number) => number
 
 The `start` position _must_ point to a slash inside `source`.
 
-From there, `skipRegex` will find with 99% accuracy the end of a regular expression in the given string.
+From there, `skipRegex` will find the end of a regular expression in the given string.
 
-The returned value is the position of the character following the regex, or `start+1` if a regex was not found.
+The returned value is the position of the character following the regex, or `start+1` if the slash does not start a regex.
 
 ## Example
 
-This is a silly example, but it will give an idea.
-
-For a complete example see [js-cleanup](https://github.com/aMarCruz/js-cleanup), an utility to clean comments safely in JS-like sources, which uses skip-regex to skip regular expressions.
+This is a silly example, but it will give the idea.
 
 ```js
 import skipRegex from 'skip-regex'
@@ -73,6 +71,8 @@ if (~start) {
   }
 }
 ```
+
+For something more complete see the [js-cleanup](https://github.com/aMarCruz/js-cleanup) code, an utility to clean comments safely in JS-like sources, which uses skip-regex to skip regular expressions.
 
 For Rollup, you can use [rollup-plugin-node-resolve](https://github.com/rollup/rollup-plugin-node-resolve) to resolve 'skip-regex' as an ES6 module.
 

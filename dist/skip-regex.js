@@ -1,5 +1,5 @@
 /**
- * skip-regex v1.0.0
+ * skip-regex v1.0.2
  * @author aMarCruz
  * @license MIT
  */
@@ -18,14 +18,14 @@ var skipRegex = (function () {
     'extends',
     'in',
     'instanceof',
+    'of',
     'prefix',
     'return',
     'typeof',
     'void',
-    'yield'
-  ];
+    'yield' ];
   var wordsEndChar = beforeReWords.reduce(function (s, w) { return s + w.slice(-1); }, '');
-  var R_JS_REGEX = /^\/(?=[^*/])[^[/\\]*(?:(?:\\.|\[(?:\\.|[^\]\\]*)*\])[^[\\/]*)*?\/[gimuy]*/;
+  var R_JS_REGEX = /^\/(?=[^*/])[^[/\\]*(?:(?:\\.|\[(?:\\.|[^\]\\]*)*\])[^[\\/]*)*?\/[gimuys]*/;
   var R_JS_VCHAR = /[$\w]/;
   var R_LINE_ALL = /.*/g;
   var _prev = function (code, pos) {
