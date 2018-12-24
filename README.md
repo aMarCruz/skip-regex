@@ -40,7 +40,7 @@ Three formats transpiled to ES5:
 skipRegex(source: string, start: number) => number
 ```
 
-The `start` position _must_ point to a slash inside `source`.
+The `start` position _must_ point to a slash within `source`.
 
 From there, `skipRegex` will find the end of a regular expression in the given string.
 
