@@ -5,13 +5,14 @@
 ### Added
 
 - Adds `of` to the keywords that can precede a regex.
+- Support for the `s` (ES9 "dotAll") flag.
 - Related links in the Readme.
 
 ## \[1.0.1] - 2018-12-21
 
 ### Fixed
 
-- ESLint must be in devDependendcies.
+- ESLint must be in devDependencies.
 
 ## \[1.0.0] - 2018-12-21
 

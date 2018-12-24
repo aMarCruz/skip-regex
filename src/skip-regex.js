@@ -30,7 +30,7 @@ export default (function () {
 
   // Matches literal regex from the start of the buffer.
   // The buffer to search must not include line-endings.
-  const R_JS_REGEX = /^\/(?=[^*/])[^[/\\]*(?:(?:\\.|\[(?:\\.|[^\]\\]*)*\])[^[\\/]*)*?\/[gimuy]*/
+  const R_JS_REGEX = /^\/(?=[^*/])[^[/\\]*(?:(?:\\.|\[(?:\\.|[^\]\\]*)*\])[^[\\/]*)*?\/[gimuys]*/
 
   // Valid characters for JavaScript variable names and literal numbers.
   const R_JS_VCHAR = /[$\w]/
